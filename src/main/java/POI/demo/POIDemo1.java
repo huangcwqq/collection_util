@@ -52,14 +52,14 @@ public class POIDemo1 {
 
     private static void write(List<?> objects){
         OutputStream outputStream = null;
+
         InputStream input = null ;
-//    ClassPathResource resource = new ClassPathResource("201908.xlsx");
+        ClassPathResource resource = new ClassPathResource("ExportTemplate.xlsx");
         try {
-//            File outPutFile = resource.getFile();
-      File outPutFile = new File("E:\\Summary\\output\\201908.xlsx");
-            input = new FileInputStream(outPutFile);
-            ExcelHelper excelHelper = new ExcelHelper(input, 2);
-            outputStream  = new FileOutputStream(outPutFile);
+            File ExportTemplate = resource.getFile();
+            File template = new File("E:\\Summary\\output\\template.xlsx");
+            outputStream = new FileOutputStream(new File("E:\\Summary\\output\\201908.xlsx"));
+            ExcelHelper excelHelper = new ExcelHelper(ExportTemplate, 0);
             int headerRow = 0;
             if (objects.size() >= 1) {
                 for (int i = 0; i < objects.size(); i++) {
