@@ -11,19 +11,24 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.primitives.Bytes;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.io.ClassPathResource;
 
 public class POIDemo1 {
     private static List<Demo1Model> modelList = new ArrayList<>();
 
     public static void main(String[] args){
-        File file = new File("E:\\DailyTable");
+    File file = new File("E:\\Summary\\201908");
         if(file.exists()){
             File[] files = file.listFiles();
             for(File f : files){
                 read(f);
             }
         }
+//        writeTxt(modelList);
         write(modelList);
     }
     private static void read(File file){
@@ -47,12 +52,14 @@ public class POIDemo1 {
 
     private static void write(List<?> objects){
         OutputStream outputStream = null;
-    ClassPathResource resource =
-        new ClassPathResource("template/汇总.xlsx");
+        InputStream input = null ;
+//    ClassPathResource resource = new ClassPathResource("201908.xlsx");
         try {
-            File outPutFile = resource.getFile();
-           outputStream  = new FileOutputStream(outPutFile);
-            ExcelHelper excelHelper = new ExcelHelper(outPutFile, 0);
+//            File outPutFile = resource.getFile();
+      File outPutFile = new File("E:\\Summary\\output\\201908.xlsx");
+            input = new FileInputStream(outPutFile);
+            ExcelHelper excelHelper = new ExcelHelper(input, 2);
+            outputStream  = new FileOutputStream(outPutFile);
             int headerRow = 0;
             if (objects.size() >= 1) {
                 for (int i = 0; i < objects.size(); i++) {
@@ -60,6 +67,29 @@ public class POIDemo1 {
                 }
                 excelHelper.write(outputStream);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                System.out.println("导出失败");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void writeTxt(List<Demo1Model> modelList){
+        OutputStream outputStream = null;
+        try {
+      File outPutFile = new File("E:\\汇总表\\Output\\201908.txt");
+            outputStream  = new FileOutputStream(outPutFile);
+            StringBuilder out = new StringBuilder();
+            for(Demo1Model model : modelList){
+                out.append(model.getNumber()).append(" ").append(model.getReason()).append("\n");
+            }
+            byte[] bytes = out.toString().getBytes();
+           outputStream.write(bytes);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

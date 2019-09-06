@@ -25,7 +25,7 @@ public class EasyExcelDemo2 {
     private static Map<String,String[]> map = new HashMap<String,String[]>();
 
     public static void main(String[] args) {
-        File file = new File("E:\\DailyTable");
+    File file = new File("E:\\汇总表\\201908");
         if(file.exists()){
             File[] files = file.listFiles();
             for(File f : files){
@@ -39,26 +39,26 @@ public class EasyExcelDemo2 {
     }
 
     private static void read(final File file) {
-    try (InputStream inputStream = new FileInputStream("E:\\DailyTable\\广州集市重点巡查作业日汇报表-20190702.xlsx")) {
+    try (InputStream inputStream = new FileInputStream(file)) {
             ExcelReader excelReader = new ExcelReader(inputStream, ExcelTypeEnum.XLSX, null, new AnalysisEventListener<List<String>>() {
 
                 @Override
                 public void invoke(List<String> object, AnalysisContext context) {
-//                    if (context.getCurrentSheet().getSheetNo()== 3){
-//                        if(context.getCurrentRowNum() > 0){
-//                            List<String> stringList = new ArrayList<>();
-//                            if(object.get(0) != null){
-////                                System.out.println(file.getName()+":");
-//                                for(String str : object){
-//                                    if(str == null)
-//                                        break;
-//                                    stringList.add(str);
-//                                }
-//                                System.out.println(stringList.toString());
-//                                work.add(stringList);
-//                            }
-//                        }
-//                    }
+                    if (context.getCurrentSheet().getSheetNo()== 2){
+                        if(context.getCurrentRowNum() > 0){
+                            List<String> stringList = new ArrayList<>();
+                            if(object.get(0) != null){
+//                                System.out.println(file.getName()+":");
+                                for(String str : object){
+                                    if(str == null)
+                                        break;
+                                    stringList.add(str);
+                                }
+                                System.out.println(stringList.toString());
+                                work.add(stringList);
+                            }
+                        }
+                    }
                         System.out.println(context.getCurrentSheet().getSheetNo()+":"+context.getCurrentRowNum()+":"+context.getCurrentRowAnalysisResult());
 
 
