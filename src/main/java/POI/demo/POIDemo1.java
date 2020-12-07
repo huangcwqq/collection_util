@@ -12,16 +12,13 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.primitives.Bytes;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.io.ClassPathResource;
 
 public class POIDemo1 {
     private static List<Demo1Model> modelList = new ArrayList<>();
 
     public static void main(String[] args){
-    File file = new File("E:\\Summary\\201908");
+    File file = new File("E:\\Summary\\201909");
         if(file.exists()){
             File[] files = file.listFiles();
             for(File f : files){
@@ -56,10 +53,10 @@ public class POIDemo1 {
         InputStream input = null ;
         ClassPathResource resource = new ClassPathResource("ExportTemplate.xlsx");
         try {
-            File ExportTemplate = resource.getFile();
+//            File ExportTemplate = resource.getFile();
             File template = new File("E:\\Summary\\output\\template.xlsx");
-            outputStream = new FileOutputStream(new File("E:\\Summary\\output\\201908.xlsx"));
-            ExcelHelper excelHelper = new ExcelHelper(ExportTemplate, 0);
+            outputStream = new FileOutputStream(new File("E:\\Summary\\output\\201909.xlsx"));
+            ExcelHelper excelHelper = new ExcelHelper(template, 0);
             int headerRow = 0;
             if (objects.size() >= 1) {
                 for (int i = 0; i < objects.size(); i++) {
